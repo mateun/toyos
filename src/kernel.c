@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 void foo();
+void _assfoo();
 
 
 void kernel_start(void) {
@@ -15,5 +16,6 @@ void kernel_start(void) {
 	vidmem[0] = 0x449;
 
 	foo();
+	_assfoo();
 	
 }
