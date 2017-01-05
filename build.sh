@@ -1,3 +1,5 @@
+export PATH="/home/martin/programming/c/i386-cross-compiler/bin/:$PATH"
+
 nasm -felf32 -o boot.o src/boot.s
 mv boot.o build
 
