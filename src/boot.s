@@ -67,16 +67,50 @@ _start:
 	installIntHandler defaultIntHandler,1
 	installIntHandler defaultIntHandler,2
 	installIntHandler defaultIntHandler,3
+	installIntHandler keyboardHandler,7
+	installIntHandler keyboardHandler,8
+	installIntHandler keyboardHandler,9
 	
+
+	; init PIC
+	;xor eax, eax
+	;in al, 0x21
+	;push eax
+	;xor eax, eax
+	;in al, 0xa1
+
+	;mov al, 11
+	;out 0x20, al 
+	;out 0xa0, al
+
+	;mov al, 8
+	;out 0x21, al
+	;mov al, 0x70
+	;out 0xa1, al
 	
-	int 0
-	int 1
-	int 2
-	int 3
+	;mov al, 4
+	;out 0x21, al
+	;mov al, 2
+	;out 0xa1, al
+	
+	;mov al, 1
+	;out 0x21, al
+	;out 0xa1, al		
+
+	;xor eax, eax
+	;pop eax
+	;out 0x21, al
+	;pop eax
+	;out 0xa1, al
+	
+	mov al, 11111101b
+	out 0x21, al
+	out 0xa1, al
 
 	call idtTest
 
-        ;cli
+       	;cli
+	sti
 .hang:  hlt
         jmp .hang
 .end:
@@ -97,3 +131,15 @@ defaultIntHandler:
 	popa
 	iret	
 
+keyboardHandler:
+	pusha
+	in al, 60h
+	mov ebx, [cursorPos]
+	mov [ds:0b8000h + ebx], word 0454h	
+	add word [cursorPos], 2
+	
+	mov al, 20h 
+	out 20h, al	
+
+	popa
+	iret
