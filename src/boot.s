@@ -1,3 +1,19 @@
+%macro installIntHandler 2
+
+	mov eax, %1 
+	mov [idt_start + (%2*8)], ax
+	mov word [idt_start + 2 + (%2*8)], cs
+	mov word [idt_start + 4 + (%2*8)], 8e00h
+	shr eax, 16
+	mov [idt_start + 6 + (%2*8)], ax
+
+%endmacro
+
+%macro silly 2
+	push %1
+	push %2
+%endmacro
+
 MBALIGN equ 1<<0
 MEMINFO equ 1<<1
 FLAGS   equ MBALIGN | MEMINFO
@@ -44,24 +60,19 @@ _start:
         ;call kernel_start
 	;mov [ds:edi+2], word 442h
 	call idtTest
-	;call idtTest
-	;call idtTest
 
 	lidt [idtr]
-	;mov eax, defaultIntHandler
-	;mov [idt_start], ax
-	;mov word [idt_start +2], cs
-	;mov word [idt_start +4], 8e00h
-	;shr eax, 16
-	;mov [idt_start + 6], ax
-	mov eax, defaultIntHandler
-	push eax
-	push word 0
-	mov ebx, [esp]
-	mov eax, [esp + 4]
-	;call installIntHandler
 
-	;int 0
+	installIntHandler defaultIntHandler,0
+	installIntHandler defaultIntHandler,1
+	installIntHandler defaultIntHandler,2
+	installIntHandler defaultIntHandler,3
+	
+	
+	int 0
+	int 1
+	int 2
+	int 3
 
 	call idtTest
 
@@ -69,22 +80,6 @@ _start:
 .hang:  hlt
         jmp .hang
 .end:
-
-installIntHandler:
-	;pop ebx		; our handler number
-	;pop eax		; our handler address
-	;mov ebx, [sp + 4]
-	;mov eax, [sp + 8]
-	mov ebx, [esp + 4]
-	pusha
-	mov eax, defaultIntHandler
-	mov [idt_start + ebx], ax
-	mov word [idt_start + ebx + 2], cs
-	mov word [idt_start + ebx + 4], 8e00h
-	shr eax, 16
-	mov [idt_start + ebx + 6], ax
-	popa
-	ret
 
 idtTest:
 	pusha
