@@ -103,10 +103,17 @@ defaultIntHandler:
 keyboardHandler:
 	pusha
 	in al, 60h
+	
+	; ignore the "just released"
+	; state for now
+	test al, 80h
+	jnz .endKbHandler
+
 	mov ebx, [cursorPos]
 	mov [ds:0b8000h + ebx], word 0454h	
 	add word [cursorPos], 2
 	
+.endKbHandler:
 	mov al, 20h 
 	out 20h, al	
 
