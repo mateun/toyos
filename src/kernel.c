@@ -3,13 +3,11 @@
 
 void foo();
 void _assfoo();
+void initInterrupts();
 
 
 void kernel_start(void) {
-	// no op here...		
-	//while(1) {
-	//
-	//}
+	initInterrupts();
 
 	// write a letter to videomemory
 	uint16_t *vidmem = (uint16_t*) 0xB8004;

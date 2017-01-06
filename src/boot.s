@@ -36,12 +36,12 @@ _start:
 	xor edi, edi
 	pop edi
 	mov [ds:edi], word 441h
-        ;extern kernel_start
-        ;call kernel_start
-	;mov [ds:edi+2], word 442h
+        extern kernel_start
+        call kernel_start
+	mov [ds:edi+2], word 442h
 	
-	extern initInterrupts
-	call initInterrupts
+	;extern initInterrupts
+	;call initInterrupts
 
 
 .hang:  hlt

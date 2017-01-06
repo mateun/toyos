@@ -76,7 +76,7 @@ keyboardHandler:
 
 	extern cursorPos
 	mov ebx, [cursorPos]
-	mov [ds:0b8000h + ebx], word 0454h	
+	mov [ds:0b8000h + ebx], word 0453h	
 	add word [cursorPos], 2
 	
 .endKbHandler:
