@@ -89,10 +89,7 @@ void printk(char* text) {
 	uint8_t idxText = 0;
 	while (c != 0) {
 		c = text[idxText];
-		vidmem[cursorPosition] = c;
-		vidmem[cursorPosition + 1] = 0xF;
-		cursorPosition += 2;
-		
+		printkc(c);	
 		idxText++;
 	}
 	cursorPosition -= 2;
