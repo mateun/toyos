@@ -38,10 +38,6 @@ _start:
 	mov [ds:edi], word 441h
         extern kernel_start
         call kernel_start
-	mov [ds:edi+2], word 442h
-	
-	;extern initInterrupts
-	;call initInterrupts
 
 
 .hang:  hlt
