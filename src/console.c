@@ -56,8 +56,7 @@ void consoleKeyEvent(uint8_t key, uint8_t keyState, uint8_t keyType) {
 	if (keyType == KEY_TYPE_NON_FUNC) {
 		//printkc(key);
 		cmdBuf[bufPos++] = key;
+		printCommandBufferContents();
 	}
 
-	if (bufPos % 4 == 0)	
-		printCommandBufferContents();
 }
