@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "keymaps.h"
+#include "keys.h"
 
 uint16_t cursorPosition=0;
 
@@ -62,19 +63,29 @@ void itoan(int num, char* str) {
 	str[str_loc] = 0;
 }
 
+char getCharForScancode(uint8_t scancode) {
+	if (scancode <= 18) {
+		return keymapGerman[scancode];
+	}
+	else {
+		return ' ';
+	}	
+}
+
 // This gets called from the
 // assembler keyboard interrupt handler
-void onKeyPressed(char scancode) {
+void onKeyPressed(uint8_t scancode) {
 	char nr[16]; 
 	itoan(scancode, nr);
 	
-	// TODO lookup scancode in keymap
-	char c = keymapGerman[scancode];
-	printkc(c);
-	printkc('(');
-	printk(nr);
-	printkc(')');
-	printkc(' ');
+	char c = getCharForScancode(scancode); 
+	//printkc(c);
+	//printkc('(');
+	//printk(nr);
+	//printkc(')');
+	//printkc(' ');
+
+	consoleKeyEvent(c, KEY_STATE_PRESSED, KEY_TYPE_NON_FUNC);
 
 	//cursorPosition += 2;	
 }

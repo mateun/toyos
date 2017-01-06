@@ -1,0 +1,9 @@
+#include <stdint.h>
+
+void printConsolePrompt(uint8_t row) {
+	uint8_t* vidmem = (uint8_t*) 0xb8000;
+	uint8_t pos = row * 80 * 2;
+	vidmem[pos] = '>';
+	vidmem[pos + 1] = 0xF;
+
+}
