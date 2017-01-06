@@ -64,7 +64,7 @@ void itoan(int num, char* str) {
 }
 
 char getCharForScancode(uint8_t scancode) {
-	if (scancode <= 18) {
+	if (scancode <= 26) {
 		return keymapGerman[scancode];
 	}
 	else {
