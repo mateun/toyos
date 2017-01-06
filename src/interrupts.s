@@ -66,7 +66,9 @@ defaultIntHandler:
 	iret	
 
 keyboardHandler:
-	pusha
+	push ebp
+	mov ebp, esp
+			
 	in al, 60h
 	
 	; ignore the "just released"
@@ -74,14 +76,19 @@ keyboardHandler:
 	test al, 80h
 	jnz .endKbHandler
 
-	extern cursorPos
-	mov ebx, [cursorPos]
-	mov [ds:0b8000h + ebx], word 0453h	
-	add word [cursorPos], 2
+	;extern cursorPos
+	;mov ebx, [cursorPos]
+	;mov [ds:0b8000h + ebx], word 0453h	
+	;add word [cursorPos], 2
+	extern onKeyPressed
+	push eax
+	call onKeyPressed
 	
 .endKbHandler:
 	mov al, 20h 
 	out 20h, al	
+	
+	mov esp, ebp
+	pop ebp
 
-	popa
 	iret
