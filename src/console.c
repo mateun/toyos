@@ -28,7 +28,6 @@ void incCursorPos() {
 
 }
 
-// 
 void moveCursor(uint8_t row, uint8_t col) {
 	uint16_t pos = (row * 80) + col;
 	outportb(0x3D4, 0x0F);
@@ -39,7 +38,7 @@ void moveCursor(uint8_t row, uint8_t col) {
 
 }
 
-void printCommandBufferContents() {
+static void printCommandBufferContents() {
 	// calculate the cursor position
 	cursorPosition = (consoleRow * 80) + consoleCol;
 	char cmd[bufPos+2];

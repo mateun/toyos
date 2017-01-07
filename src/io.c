@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include "keymaps.h"
 #include "keys.h"
+#include "console.h"
 
 uint16_t cursorPosition=0;
 

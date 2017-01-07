@@ -1,12 +1,10 @@
 #include <stddef.h>
 #include <stdint.h>
+#include "console.h"
 
-void foo();
-void _assfoo();
 void initInterrupts();
 void printk();
 void printkc();
-void moveCursor();
 
 void kernel_start(void) {
 	initInterrupts();
@@ -23,7 +21,4 @@ void kernel_start(void) {
 	moveCursor(3, 1);
 	moveCursor(8, 12);
 
-	//foo();
-	//_assfoo();
-	
 }
